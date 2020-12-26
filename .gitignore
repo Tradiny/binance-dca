@@ -1,4 +1,6 @@
 __pycache__
+*.pyc
+every_*
 config.py
 db.pickle
 invest.log

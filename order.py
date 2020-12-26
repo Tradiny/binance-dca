@@ -2,8 +2,9 @@ from binance.client import Client
 from binance.exceptions import BinanceAPIException, BinanceWithdrawException
 from logger import log
 from math import floor, log10
-from config import binance_config
-from config import script_root
+from config import binance_config, debug
+import os
+script_root = os.path.dirname(os.path.abspath(__file__)) + '/'
 import pickle
 import os.path
 
@@ -12,9 +13,13 @@ if not os.path.exists(script_root + 'db.pickle'):
 
 def connect():
     global client
+
+    log('*** For more trading tools, check out tradiny.com ***')
+
+    log('Logging into Binance...')
     client = Client(binance_config['api_key'], binance_config['api_secret'])
 
-prod = True
+prod = not debug
 
 def to_binance_price(s, p):
     global client
@@ -139,7 +144,10 @@ def get_portfolio(s):
     sum_usdt = sum(balances.values())
     portfolio = {}
     for a, p in s.items():
-        portfolio[a] = balances[a] * 100 / sum_usdt
+        if sum_usdt != 0:
+            portfolio[a] = balances[a] * 100 / sum_usdt
+        else:
+            portfolio[a] = 0
     return portfolio
 
 

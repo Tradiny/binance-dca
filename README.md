@@ -30,7 +30,7 @@ If the system detects funds in a fiat currency or any other (you can specify thi
 
 For example, if you deposit 200 euros, the system will use the following algorithm to balance the deposited euros:
 
-The system buys the calculated percentage of the deposited euros if the amount of BTC in your portfolio is less than 66% and:
+The system buys the calculated percentage (to reflect your weights) of the deposited euros if the amount of BTC in your portfolio is less than 66% and:
 
 1. The asset is below EMA 200 1d
 2. Or there is not enough data to calculate EMA 200 1d
@@ -47,17 +47,12 @@ The assets are withdrawn into your wallets (variable `addresses`). We suggest to
 
 ## Setup
 
-You need to create file `config.py` with your configuration (and replace `PATH-TO-PROJECT`):
+You need to create file `config.py` with your configuration:
 
 ```
 binance_config = {
     'api_key': 'YOUR BINANCE API KEY',
     'api_secret': 'YOUR BINANCE API SECRET'
-}
-
-addresses = {
-    'BTC': 'YOUR BTC WITHDRAWAL ADDRESS',
-    'ETH': 'YOUR ETH WITHDRAWAL ADDRESS'
 }
 
 from_asset = 'EUR'
@@ -68,12 +63,17 @@ weights = {
 }
 penalization = 50
 
+addresses = {
+    'BTC': 'YOUR BTC WITHDRAWAL ADDRESS',
+    'ETH': 'YOUR ETH WITHDRAWAL ADDRESS'
+}
+withdraw_period = 'every_week' # can be also 'every_month' or 'every_2nd_month'
+
 gmail_user = 'YOUR GMAIL ADDRESS' # set to None if you want to disable this
 gmail_password = 'YOUR GMAIL PASSWORD'
 to_email = 'EMAIL ADDRESS WHERE THE SYSTEM SENDS LOGS'
 
-debug = False
-script_root = '/PATH-TO-PROJECT/' # where the script is located
+debug = False # this disables buying and withdrawing if true
 ```
 
 ### Binance setup
@@ -123,5 +123,9 @@ nohup bash -c "while [ 1 ]; do /usr/bin/python3 /PATH-TO-PROJECT/run.py  >> /tmp
 https://tradiny.com
 
 If you find this script useful, please consider joining our trading community at tradiny.com
+
+## Disclaimer
+
+Please read carefully https://tradiny.com/disclaimer.html
 
 

@@ -1,6 +1,8 @@
 import logging
 import smtplib
-from config import script_root, gmail_user, gmail_password
+from config import gmail_user, gmail_password
+import os
+script_root = os.path.dirname(os.path.abspath(__file__)) + '/'
 
 logging.basicConfig(handlers=[logging.FileHandler(filename=script_root + "invest.log",
                                                  encoding='utf-8', mode='a+')],

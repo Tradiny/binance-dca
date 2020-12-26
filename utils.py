@@ -36,15 +36,20 @@ def order_assets_by_weights_and_usdt(weights, logging = True):
 
     portfolio_settings = weights_to_percent(weights)
 
+    log('Getting your portfolio...')
     portfolio = get_portfolio(portfolio_settings)
     if logging:
         log('*** Portfolio ***')
         for a, p in portfolio.items(): log('%s has %.2f, should have %.2f' % (a, p, portfolio_settings[a]))
+        log('***')
 
     return _order_assets_by_usdt(portfolio_settings, portfolio)
 
 def set_amounts(from_asset, assets):
+
     balance = get_balance(from_asset)
+
+    log('You have %.2f %s' % (balance, from_asset))
     saved = 0
     not_penalized = []
     above_ema_cached = {}
