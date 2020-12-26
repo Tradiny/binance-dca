@@ -30,7 +30,7 @@ if debug or tick('every_week'):
                 amount = trade('BTC', asset, {'amount': amount, 'asset': 'BTC'})
 
 
-    if debug or tick(withdraw_period):
+    if debug or withdraw_period == 'every_week' or tick(withdraw_period):
         tick_touch(withdraw_period)
 
         for o in assets:
@@ -45,8 +45,9 @@ if debug or tick('every_week'):
                 log('Sleeping 60s after withdrawal')
                 time.sleep(60)
 
+    log('Done')
+
     send_logged(to_email)
 
-    log('Done')
 
 
