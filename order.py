@@ -24,18 +24,34 @@ prod = not debug
 def to_binance_price(s, p):
     global client
     info = client.get_symbol_info(s)
+
+    whole_precision = 0
     precision = info['baseAssetPrecision']
+
     for f in info['filters']:
         if f['filterType'] == 'LOT_SIZE' and 'stepSize' in f:
             stepSize = f['stepSize']
-            e = abs(get_e(float(stepSize)))
-            if e is not None and e < precision:
-                precision = e
+            if float(stepSize).is_integer():
+                whole_precision = int(float(stepSize))
+            else:
+                e = abs(get_e(float(stepSize)))
+                if e is not None and e < precision:
+                    precision = e
     p = format_price(p)
     if '.' in p:
         p = p.split('.')
         p[1] = p[1][:precision]
         p = '.'.join(p)
+
+    if whole_precision != 0:
+        if '.' in p:
+            p = p.split('.')
+            p = p[0]
+        if whole_precision >= 2:
+            p = list(p)
+            for i in range(1, whole_precision):
+                p[-1 * i] = '0'
+            p = ''.join(p)
     return p
 
 def buy(asset_from, asset_to, symbol, quantity):
