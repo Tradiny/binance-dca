@@ -26,8 +26,8 @@ if debug or tick('every_week'):
             if p is not None:
                 amount = trade(from_asset, asset, {'amount': amount, 'asset': from_asset})
             else:
-                amount = trade(from_asset, 'BTC', {'amount': amount, 'asset': from_asset})
-                amount = trade('BTC', asset, {'amount': amount, 'asset': 'BTC'})
+                amount = trade(from_asset, 'USDT', {'amount': amount, 'asset': from_asset})
+                amount = trade('USDT', asset, {'amount': amount, 'asset': 'BTC'})
 
 
     if debug or withdraw_period == 'every_week' or tick(withdraw_period):
