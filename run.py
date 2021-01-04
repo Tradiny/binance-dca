@@ -1,7 +1,7 @@
-from order import trade, withdraw, get_balance, find_pair, connect
+from order import trade, withdraw, get_balance, find_pair, connect, get_portfolio
 from tick import tick_touch, tick
 from logger import log, send_logged
-from utils import order_assets_by_weights_and_usdt, set_amounts
+from utils import order_assets_by_weights_and_usdt, set_amounts, weights_to_percent
 from config import addresses, from_asset, debug, weights, to_email, withdraw_period
 import time
 
@@ -44,6 +44,13 @@ if debug or tick('every_week'):
                 withdraw(asset, addresses[asset], balance)
                 log('Sleeping 60s after withdrawal')
                 time.sleep(60)
+
+    log('Getting your portfolio...')
+    portfolio_settings = weights_to_percent(weights)
+    portfolio = get_portfolio(portfolio_settings)
+    log('*** Portfolio ***')
+    for a, p in portfolio.items(): log('%s has %.2f, should have %.2f' % (a, p, portfolio_settings[a]))
+    log('***')
 
     log('Done')
 
