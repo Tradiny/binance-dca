@@ -56,6 +56,7 @@ binance_config = {
 }
 
 from_asset = 'EUR'
+max_amount = 200 # max amount even though you have more EUR in the account
 weights = {
     'BTC': 100,
     'ETH': 50,

@@ -45,11 +45,15 @@ def order_assets_by_weights_and_usdt(weights, logging = True):
 
     return _order_assets_by_usdt(portfolio_settings, portfolio)
 
-def set_amounts(from_asset, assets):
+def set_amounts(from_asset, max_amount, assets):
 
     balance = get_balance(from_asset)
 
     log('You have %.2f %s' % (balance, from_asset))
+    if balance > max_amount:
+        balance = max_amount
+    log('%.2f %s will be used' % (balance, from_asset))
+
     saved = 0
     not_penalized = []
     above_ema_cached = {}

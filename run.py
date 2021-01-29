@@ -2,7 +2,7 @@ from order import trade, withdraw, get_balance, find_pair, connect, get_portfoli
 from tick import tick_touch, tick
 from logger import log, send_logged
 from utils import order_assets_by_weights_and_usdt, set_amounts, weights_to_percent
-from config import addresses, from_asset, debug, weights, to_email, withdraw_period
+from config import addresses, from_asset, debug, weights, to_email, withdraw_period, max_amount
 import time
 
 
@@ -12,7 +12,7 @@ if debug or tick('every_week'):
     connect()
 
     assets = order_assets_by_weights_and_usdt(weights)
-    assets = set_amounts(from_asset, assets)
+    assets = set_amounts(from_asset, max_amount, assets)
 
     for o in assets:
         asset = o['a']
